@@ -23,6 +23,7 @@
     [super viewDidLoad];
 
     [SuperHero retrieveSuperHerosWithCompletion:^(NSArray *superHeros) {
+
         self.heroes = superHeros;
 
         SuperHero *s1 = self.heroes[0];
@@ -34,7 +35,7 @@
 
 }
 
--(void)setHeroes:(NSArray *)heroes
+- (void)setHeroes:(NSArray *)heroes
 {
     _heroes = heroes;
     [self.tableView reloadData];

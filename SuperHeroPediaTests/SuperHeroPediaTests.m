@@ -33,8 +33,27 @@
     [super tearDown];
 }
 
+-(void)testAllyCountStartAtZero{
+    XCTAssert(self.hero1.allies.count == 0);
+}
+
+-(void)testAddingAnAllyWorks{
+    [self.hero1 addAlly:self.hero2];
+    XCTAssertEqual(self.hero1, self.hero2.allies.firstObject);
+    XCTAssertEqual(self.hero2, self.hero1.allies.firstObject);
+}
+
 -(void)testAllyStartsNotNil{
     XCTAssert(self.hero1.allies != nil);
+}
+
+-(void)testSuperheroRetrievable{
+    XCTestExpectation *expectation = [self expectationWithDescription:@"retrieving superheroes"];
+    [SuperHero retrieveSuperHerosWithCompletion:^(NSArray *superHeros) {
+        XCTAssertEqual(25, superHeros.count);
+        [expectation fulfill];
+    }];
+    [self waitForExpectationsWithTimeout:0.001 handler:nil];
 }
 
 - (void)testExample {
@@ -46,6 +65,12 @@
     // This is an example of a performance test case.
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
+        XCTestExpectation *expectation = [self expectationWithDescription:@"retrieving superheroes"];
+        [SuperHero retrieveSuperHerosWithCompletion:^(NSArray *superHeros) {
+            XCTAssertEqual(25, superHeros.count);
+            [expectation fulfill];
+        }];
+        [self waitForExpectationsWithTimeout:10.0 handler:nil];
     }];
 }
 
